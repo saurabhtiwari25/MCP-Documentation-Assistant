@@ -1,0 +1,24 @@
+# General
+.env
+.DS_Store
+
+# Frontend (Node.js/React)
+node_modules/
+dist/
+build/
+.next/
+npm-debug.log
+yarn-error.log
+coverage/
+.eslintcache
+
+# Backend (Python)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.sqlite3
+.pytest_cache/
+.mypy_cache/

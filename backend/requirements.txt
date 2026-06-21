@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+langchain
+langchain-text-splitters
+langchain-google-genai
+qdrant-client
+pypdf
+unstructured
+mcp
+psycopg2-binary
+sqlalchemy
+python-multipart
