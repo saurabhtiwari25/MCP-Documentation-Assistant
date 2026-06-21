@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, MessageSquare, Files, Settings } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Files, Info } from 'lucide-react';
 
 export default function Sidebar() {
   const location = useLocation();
@@ -8,13 +8,13 @@ export default function Sidebar() {
     { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
     { to: '/chat', icon: MessageSquare, label: 'Chat' },
     { to: '/documents', icon: Files, label: 'Documents' },
-    { to: '/settings', icon: Settings, label: 'Settings' },
+    { to: '/Info', icon: Info, label: 'Info' },
   ];
 
   return (
     <div className="sidebar">
       <div style={{ padding: '24px', fontSize: '20px', fontWeight: 'bold', borderBottom: '1px solid var(--border-color)' }}>
-        MCP Assistant
+        MCP Document Assistant
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', padding: '16px 8px', gap: '8px' }}>
         {links.map((link) => {

@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
 import Chat from './pages/Chat';
 import Documents from './pages/Documents';
-import Settings from './pages/Settings';
+import Info from './pages/Info';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/documents" element={<Documents />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/Info" element={<Info />} />
             </Routes>
           </div>
         </div>

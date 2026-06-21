@@ -1,9 +1,9 @@
 import { CheckCircle, Database, Server } from 'lucide-react';
 
-export default function Settings() {
+export default function Info() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <h1>Settings</h1>
+      <h1>Info</h1>
       
       <div className="card" style={{ maxWidth: '600px' }}>
         <h3 style={{ marginBottom: '24px' }}>System Health</h3>
