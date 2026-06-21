@@ -4,8 +4,7 @@ from qdrant_client.http.models import Distance, VectorParams, PointStruct
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import uuid
 
-# Initialize embeddings and Qdrant
-# Note: For production we would configure this more robustly
+
 EMBEDDING_MODEL = "models/embedding-001"
 COLLECTION_NAME = "documents_gemini"
 
@@ -20,7 +19,6 @@ class VectorStore:
         self._ensure_collection()
         
     def _ensure_collection(self):
-        # We need to know the vector size. models/embedding-001 is 768
         collections = self.client.get_collections().collections
         if not any(c.name == COLLECTION_NAME for c in collections):
             self.client.create_collection(
@@ -63,5 +61,4 @@ class VectorStore:
             })
         return results
 
-# Singleton instance
 store = VectorStore()

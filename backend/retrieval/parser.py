@@ -16,7 +16,6 @@ def process_and_store_document(file_path: str, filename: str):
         with open(file_path, "r", encoding="utf-8") as f:
             text = f.read()
     else:
-        # Fallback to unstructured if installed
         try:
             from unstructured.partition.auto import partition
             elements = partition(filename=file_path)
@@ -27,7 +26,6 @@ def process_and_store_document(file_path: str, filename: str):
     if not text.strip():
         raise ValueError("No text could be extracted from the file.")
         
-    # Chunking
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=200,
@@ -35,7 +33,6 @@ def process_and_store_document(file_path: str, filename: str):
     )
     chunks = text_splitter.split_text(text)
     
-    # Store
     metadata = [{"source": filename, "chunk_index": i} for i in range(len(chunks))]
     store.add_documents(chunks, metadata)
     

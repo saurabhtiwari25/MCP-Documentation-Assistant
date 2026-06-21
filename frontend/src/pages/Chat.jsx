@@ -27,7 +27,6 @@ export default function Chat() {
     setIsLoading(true);
     setToolCalls([]);
 
-    // Add empty assistant message
     setMessages(prev => [...prev, { role: 'assistant', content: '', sources: null, confidence: null }]);
 
     try {

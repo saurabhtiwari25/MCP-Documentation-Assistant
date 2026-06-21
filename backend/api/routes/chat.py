@@ -11,24 +11,18 @@ class ChatRequest(BaseModel):
 
 @router.post("/")
 async def chat_endpoint(request: ChatRequest):
-    # In a fully streaming setup we would use agent_executor.astream_events.
-    # For this simplified enterprise architecture, we process it and stream the result back
-    # or just return JSON. Since the requirement asks for StreamingResponse, let's stream the final structured output.
+
     
     async def generate():
         try:
-            # We fetch the full structured response
             response = await ask_question(request.message)
             
-            # Send tool call status first
             yield f"data: {json.dumps({'type': 'status', 'content': 'Tools executed successfully'})}\n\n"
             
-            # Simulate streaming the answer
             words = response.answer.split(" ")
             for word in words:
                 yield f"data: {json.dumps({'type': 'token', 'content': word + ' '})}\n\n"
                 
-            # Send citations
             yield f"data: {json.dumps({'type': 'citations', 'sources': response.sources, 'confidence': response.confidence})}\n\n"
             
             yield f"data: [DONE]\n\n"

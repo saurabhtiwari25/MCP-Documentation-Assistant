@@ -16,11 +16,9 @@ async def upload_file(file: UploadFile = File(...)):
     file_path = os.path.join(UPLOAD_DIR, file.filename)
     
     try:
-        # Save file to disk
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
             
-        # Parse and store in Qdrant
         num_chunks = process_and_store_document(file_path, file.filename)
         
         return {

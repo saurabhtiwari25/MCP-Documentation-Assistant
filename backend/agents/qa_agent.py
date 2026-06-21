@@ -21,42 +21,34 @@ def create_mcp_langchain_tools(mcp_tools: list[dict]):
         server_name = item["server"]
         mcp_tool = item["tool"]
         
-        # We need a closure to capture the specific server and tool name
         def make_tool_func(s_name, t_name):
             async def func(**kwargs):
                 # We log the tool call for the frontend UI (this would typically be emitted via WebSockets or a shared DB)
                 print(f"MCP_TOOL_CALL: {s_name}.{t_name} with {kwargs}")
                 
-                # Execute the MCP tool
                 result = await mcp_manager.call_tool(s_name, t_name, kwargs)
                 
-                # Format result
                 if result.isError:
                     return f"Error: {result.content}"
                 
-                # result.content is a list of TextContent or ImageContent
                 texts = [c.text for c in result.content if getattr(c, 'type', '') == 'text']
                 return "\n".join(texts)
             return func
             
-        # Create a dynamic LangChain StructuredTool
-        # For simplicity, we define the args schema manually based on known tools
-        # In a fully robust implementation, we would parse mcp_tool.inputSchema
+
         lc_tool = StructuredTool.from_function(
             func=None,
             coroutine=make_tool_func(server_name, mcp_tool.name),
             name=f"{server_name}_{mcp_tool.name}",
             description=mcp_tool.description or f"Tool {mcp_tool.name} from {server_name}",
         )
-        # Note: to properly map args, you usually define a Pydantic model for args_schema based on inputSchema
-        # However, ChatGoogleGenerativeAI might fail without proper args_schema if input is complex.
         lc_tools.append(lc_tool)
         
     return lc_tools
 
 async def ask_question(query: str):
     llm = ChatGoogleGenerativeAI(
-        model="gemini-2.5-pro", # or gemini-1.5-pro depending on the API key access
+        model="gemini-2.5-pro", 
         temperature=0.2,
     )
     
@@ -73,8 +65,6 @@ async def ask_question(query: str):
     
     final_output = response["messages"][-1].content
     
-    # Now we want a structured output. We can ask the LLM to format its final response.
-    # In a real scenario we could use llm.with_structured_output(QAResponse) at the end.
     struct_llm = llm.with_structured_output(QAResponse)
     structured_res = await struct_llm.ainvoke(f"Based on this answer: {final_output}\nExtract the final answer, sources used, and a confidence score.")
     
