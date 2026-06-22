@@ -13,10 +13,7 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
-      <div style={{ padding: '24px', fontSize: '20px', fontWeight: 'bold', borderBottom: '1px solid var(--border-color)' }}>
-        MCP Document Assistant
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', padding: '16px 8px', gap: '8px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', padding: '24px 8px 16px', gap: '8px' }}>
         {links.map((link) => {
           const Icon = link.icon;
           const isActive = location.pathname === link.to;

@@ -4,6 +4,7 @@ import { UploadCloud, Trash2, FileText } from 'lucide-react';
 export default function Documents() {
   const [documents, setDocuments] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState(null);
 
   const fetchDocs = async () => {
     try {
@@ -24,17 +25,30 @@ export default function Documents() {
     if (!file) return;
 
     setIsUploading(true);
+    setUploadMessage(null);
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-      await fetch('http://localhost:8000/upload', {
+      const response = await fetch('http://localhost:8000/upload', {
         method: 'POST',
         body: formData,
       });
+      
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.detail || 'Upload failed');
+      }
+      
+      const data = await response.json();
+      setUploadMessage({ type: 'success', text: `${data.filename} uploaded successfully.` });
+      
       await fetchDocs();
+      
+      setTimeout(() => setUploadMessage(null), 5000);
     } catch (e) {
       console.error(e);
+      setUploadMessage({ type: 'error', text: e.message || 'An error occurred during upload' });
     } finally {
       setIsUploading(false);
     }
@@ -64,6 +78,19 @@ export default function Documents() {
           {isUploading ? 'Uploading...' : 'Select File'}
           <input type="file" onChange={handleFileUpload} style={{ display: 'none' }} disabled={isUploading} />
         </label>
+        
+        {uploadMessage && (
+          <div style={{ 
+            marginTop: '16px', 
+            padding: '12px', 
+            borderRadius: '6px', 
+            background: uploadMessage.type === 'success' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+            color: uploadMessage.type === 'success' ? '#22c55e' : '#ef4444',
+            border: `1px solid ${uploadMessage.type === 'success' ? '#22c55e' : '#ef4444'}`
+          }}>
+            {uploadMessage.text}
+          </div>
+        )}
       </div>
 
       <div className="card">

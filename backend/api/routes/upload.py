@@ -27,7 +27,6 @@ async def upload_file(file: UploadFile = File(...)):
             "chunks": num_chunks
         }
     except Exception as e:
-        # Cleanup
         if os.path.exists(file_path):
             os.remove(file_path)
         raise HTTPException(status_code=500, detail=str(e))

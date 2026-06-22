@@ -26,7 +26,6 @@ async def search_pdf(filepath: str, query: str) -> str:
     if "Error" in text:
         return text
     
-    # Simple keyword search with context window
     lines = text.split('\n')
     results = []
     for i, line in enumerate(lines):
@@ -38,7 +37,7 @@ async def search_pdf(filepath: str, query: str) -> str:
     
     if not results:
         return "No matches found."
-    return "\n\n".join(results[:5]) # limit to top 5 hits
+    return "\n\n".join(results[:5]) 
 
 if __name__ == "__main__":
     mcp.run()

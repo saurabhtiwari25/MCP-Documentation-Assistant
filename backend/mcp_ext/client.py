@@ -39,7 +39,6 @@ class MCPClientManager:
         for name, session in self.sessions.items():
             response = await session.list_tools()
             for tool in response.tools:
-                # Add server name to tool name to avoid collisions if any
                 all_tools.append({
                     "server": name,
                     "tool": tool,

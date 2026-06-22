@@ -6,7 +6,7 @@ By decoupling tool logic into independent MCP Servers, this architecture is high
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 - **Multi-format Document Processing**: Upload Markdown (`.md`), Text (`.txt`), and PDF (`.pdf`) files directly from the UI.
 - **Agentic RAG Architecture**: Automatically chunks and embeds uploaded documents into Qdrant for semantic search. The Agent independently decides *when* and *how* to search based on the user's query.
@@ -18,7 +18,7 @@ By decoupling tool logic into independent MCP Servers, this architecture is high
 
 ---
 
-## 🚀 Technologies Used
+## Technologies Used
 
 ### Backend & AI Infrastructure
 - **Python 3.12+**
@@ -38,7 +38,7 @@ By decoupling tool logic into independent MCP Servers, this architecture is high
 
 ---
 
-## 🧠 System Architecture & Workflow
+## System Architecture & Workflow
 
 1. **Ingestion Flow**: 
    - User uploads a file via the React UI (`/documents`).
@@ -55,7 +55,7 @@ By decoupling tool logic into independent MCP Servers, this architecture is high
 
 ---
 
-## 🛠️ MCP Servers & Available Tools
+## MCP Servers & Available Tools
 
 This project implements three distinct MCP servers, running as isolated `stdio` subprocesses:
 
@@ -74,7 +74,7 @@ This project implements three distinct MCP servers, running as isolated `stdio` 
 
 ---
 
-## 📂 Detailed Project Structure
+## Detailed Project Structure
 
 ```text
 ├── docker-compose.yml       # Orchestrates FastAPI, React, Qdrant, and PostgreSQL
@@ -121,7 +121,7 @@ This project implements three distinct MCP servers, running as isolated `stdio` 
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ### Prerequisites
 1. Ensure you have **Docker** and **Docker Compose** installed on your machine.
