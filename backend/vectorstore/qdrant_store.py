@@ -11,11 +11,8 @@ COLLECTION_NAME = "documents_gemini_3072"
 
 class VectorStore:
     def __init__(self):
-        qdrant_host = os.getenv("QDRANT_HOST", "localhost")
-
         self.client = QdrantClient(
-            host=qdrant_host,
-            port=6333
+            url=os.environ["QDRANT_URL"]
         )
 
         self.encoder = GoogleGenerativeAIEmbeddings(
