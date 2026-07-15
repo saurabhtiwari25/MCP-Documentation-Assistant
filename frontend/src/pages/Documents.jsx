@@ -18,7 +18,7 @@ export default function Documents() {
 
   const fetchDocs = async () => {
     try {
-      const res = await fetch('http://localhost:8000/documents');
+      const res = await fetch('https://mcp-documentation-assistant.onrender.com/documents');
       const data = await res.json();
       setDocuments(data.documents || []);
     } catch (e) {
@@ -50,21 +50,21 @@ export default function Documents() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:8000/upload', {
+      const response = await fetch('https://mcp-documentation-assistant.onrender.com/upload', {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) {
         const errData = await response.json();
         throw new Error(errData.detail || 'Upload failed');
       }
-      
+
       const data = await response.json();
       setUploadMessage({ type: 'success', text: `${data.filename} uploaded successfully.` });
-      
+
       await fetchDocs();
-      
+
       setTimeout(() => setUploadMessage(null), 5000);
     } catch (e) {
       console.error(e);
@@ -76,7 +76,7 @@ export default function Documents() {
 
   const handleDelete = async (filename) => {
     try {
-      await fetch(`http://localhost:8000/documents/${filename}`, {
+      await fetch(`https://mcp-documentation-assistant.onrender.com/documents/${filename}`, {
         method: 'DELETE',
       });
       await fetchDocs();
@@ -99,7 +99,7 @@ export default function Documents() {
     setMessages(prev => [...prev, { role: 'assistant', content: '', sources: null, confidence: null }]);
 
     try {
-      const response = await fetch('http://localhost:8000/chat', {
+      const response = await fetch('https://mcp-documentation-assistant.onrender.com/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: input })
@@ -182,12 +182,12 @@ export default function Documents() {
       {/* Left Column: Documents */}
       <div className="flex-1 flex flex-col gap-6 overflow-y-auto pr-2 pb-4">
         <h1 className="text-3xl font-bold tracking-tight text-foreground shrink-0">Documents & Chat</h1>
-        
+
         <div className="bg-card/80 backdrop-blur-sm border-2 border-dashed border-border rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-sm transition-colors hover:bg-muted/50 shrink-0">
           <UploadCloud size={40} className="text-muted-foreground mb-4" />
           <h3 className="text-xl font-semibold mb-2 text-foreground">Upload a Document</h3>
           <p className="text-sm text-muted-foreground mb-6">Support for PDF, TXT, and Markdown files</p>
-          
+
           <Button variant="ghost" size="lg" asChild disabled={isUploading}>
             <label className="cursor-pointer">
               <UploadCloud size={16} />
@@ -195,13 +195,12 @@ export default function Documents() {
               <input type="file" onChange={handleFileUpload} className="hidden" disabled={isUploading} />
             </label>
           </Button>
-          
+
           {uploadMessage && (
-            <div className={`mt-4 px-4 py-3 rounded-lg border text-sm ${
-              uploadMessage.type === 'success' 
-                ? 'bg-green-500/10 text-green-500 border-green-500/20' 
+            <div className={`mt-4 px-4 py-3 rounded-lg border text-sm ${uploadMessage.type === 'success'
+                ? 'bg-green-500/10 text-green-500 border-green-500/20'
                 : 'bg-red-500/10 text-red-500 border-red-500/20'
-            }`}>
+              }`}>
               {uploadMessage.text}
             </div>
           )}
@@ -224,8 +223,8 @@ export default function Documents() {
                       <div className="text-xs text-muted-foreground mt-0.5">{(doc.size / 1024).toFixed(1)} KB</div>
                     </div>
                   </div>
-                  <button 
-                    onClick={() => handleDelete(doc.filename)} 
+                  <button
+                    onClick={() => handleDelete(doc.filename)}
                     className="text-red-500 hover:text-red-600 hover:bg-red-500/10 p-1.5 rounded-lg transition-colors shrink-0 ml-2"
                     title="Delete Document"
                   >
@@ -236,7 +235,7 @@ export default function Documents() {
             </div>
           )}
         </div>
-        
+
         <div className="mt-auto pt-6 shrink-0 h-64">
           <MCPStatus toolCalls={toolCalls} />
         </div>
@@ -274,11 +273,10 @@ export default function Documents() {
                   </div>
                 )}
 
-                <div className={`p-4 rounded-2xl max-w-[90%] shadow-sm text-sm ${
-                  msg.role === 'user' 
-                    ? 'self-end bg-primary text-primary-foreground ml-auto rounded-br-sm' 
+                <div className={`p-4 rounded-2xl max-w-[90%] shadow-sm text-sm ${msg.role === 'user'
+                    ? 'self-end bg-primary text-primary-foreground ml-auto rounded-br-sm'
                     : 'self-start bg-background/80 border border-border rounded-bl-sm text-foreground'
-                }`}>
+                  }`}>
                   <div className="whitespace-pre-wrap leading-relaxed">{msg.content}</div>
 
                   {msg.sources && msg.sources.length > 0 && (
