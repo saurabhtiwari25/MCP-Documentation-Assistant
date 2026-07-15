@@ -5,7 +5,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.http.models import Distance, VectorParams, PointStruct
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
-EMBEDDING_MODEL = "models/gemini-embedding-2"
+EMBEDDING_MODEL = "models/gemini-embedding-001"
 COLLECTION_NAME = "documents_gemini_3072"
 
 

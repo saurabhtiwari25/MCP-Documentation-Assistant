@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Files, FileText, Database } from 'lucide-react';
+import { Files, Server } from 'lucide-react';
 
 export default function Dashboard() {
   const [stats, setStats] = useState({ documents: 0, mcpServers: 0, mcpServerNames: [] });
@@ -27,39 +27,31 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-      <h1>Dashboard</h1>
+    <div className="flex flex-col gap-8 overflow-y-auto h-full pb-4">
+      <h1 className="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
       
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
-        <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '20px', padding: '24px' }}>
-          <div style={{ background: 'rgba(59, 130, 246, 0.1)', padding: '16px', borderRadius: '12px' }}>
-            <Files size={32} color="var(--accent-color)" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 hover:border-primary/50 transition-all duration-300 flex items-center gap-5">
+          <div className="bg-blue-500/10 p-4 rounded-xl">
+            <Files size={32} className="text-primary" />
           </div>
           <div>
-            <div style={{ fontSize: '28px', fontWeight: 'bold' }}>{stats.documents}</div>
-            <div style={{ color: 'var(--text-secondary)' }}>Total Documents</div>
+            <div className="text-3xl font-bold text-foreground">{stats.documents}</div>
+            <div className="text-muted-foreground text-sm font-medium mt-1">Total Documents</div>
           </div>
         </div>
         
-        <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '20px', padding: '24px' }}>
-          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '16px', borderRadius: '12px' }}>
-            <Server size={32} color="var(--success-color)" />
+        <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 hover:border-primary/50 transition-all duration-300 flex items-center gap-5">
+          <div className="bg-green-500/10 p-4 rounded-xl">
+            <Server size={32} className="text-green-500" />
           </div>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: '28px', fontWeight: 'bold' }}>{stats.mcpServers}</div>
-            <div style={{ color: 'var(--text-secondary)' }}>Active MCP Servers</div>
+          <div className="flex-1">
+            <div className="text-3xl font-bold text-foreground">{stats.mcpServers}</div>
+            <div className="text-muted-foreground text-sm font-medium mt-1">Active MCP Servers</div>
             {stats.mcpServerNames?.length > 0 && (
-              <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
+              <div className="flex flex-wrap gap-2 mt-3">
                 {stats.mcpServerNames.map(name => (
-                  <span key={name} style={{ 
-                    background: 'var(--bg-secondary)', 
-                    color: 'var(--text-primary)',
-                    padding: '4px 10px', 
-                    borderRadius: '16px', 
-                    fontSize: '12px',
-                    border: '1px solid var(--border-color)',
-                    textTransform: 'capitalize'
-                  }}>
+                  <span key={name} className="bg-secondary/50 text-secondary-foreground px-3 py-1 rounded-full text-xs border border-border/50 capitalize font-medium">
                     {name}
                   </span>
                 ))}
@@ -69,14 +61,12 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className="card">
-        <h3 style={{ marginBottom: '16px' }}>System Architecture Overview</h3>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>
+      <div className="bg-card/80 backdrop-blur-sm border border-border rounded-2xl p-6 shadow-sm">
+        <h3 className="text-xl font-semibold mb-3 text-foreground">System Architecture Overview</h3>
+        <p className="text-muted-foreground leading-relaxed">
           This Documentation Assistant is powered by the Model Context Protocol (MCP), enabling the LangChain QA Agent to dynamically call tools across local filesystems, PDF extractors, and vector databases.
         </p>
       </div>
     </div>
   );
 }
-
-import { Server } from 'lucide-react';

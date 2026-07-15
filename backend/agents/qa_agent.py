@@ -2,7 +2,7 @@ import os
 import json
 from pydantic import BaseModel, Field
 from langchain_core.tools import tool, StructuredTool
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages import HumanMessage, SystemMessage
 
@@ -116,8 +116,8 @@ async def stream_question(query: str):
         "count": len(results),
     }
 
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-2.0-flash-lite", 
+    llm = ChatGroq(
+        model="llama-3.3-70b-versatile", 
         temperature=0.2,
         streaming=True
     )

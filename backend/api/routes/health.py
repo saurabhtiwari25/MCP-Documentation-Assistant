@@ -8,7 +8,6 @@ async def health_check():
     return {
         "status": "healthy", 
         "mcp": "ok", 
-        "qdrant": "ok", 
-        "postgres": "ok",
+        "qdrant": "ok",
         "mcp_servers": list(mcp_manager.sessions.keys())
     }

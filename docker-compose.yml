@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build:
@@ -10,11 +8,10 @@ services:
       - ./backend:/app
     environment:
       - QDRANT_HOST=qdrant
-      - POSTGRES_URL=postgresql://postgres:postgres@postgres:5432/mcpdb
       - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
     depends_on:
       - qdrant
-      - postgres
 
   frontend:
     build:
@@ -36,17 +33,5 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage
 
-  postgres:
-    image: postgres:15-alpine
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=mcpdb
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
 volumes:
   qdrant_data:
-  postgres_data:
