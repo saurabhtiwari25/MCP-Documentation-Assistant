@@ -11,16 +11,27 @@ COLLECTION_NAME = "documents_gemini_3072"
 
 class VectorStore:
     def __init__(self):
+        print("1. Starting VectorStore")
+        print("2. QDRANT_URL =", os.environ.get("QDRANT_URL"))
+
         self.client = QdrantClient(
-            url=os.environ["QDRANT_URL"]
+            url=os.environ["QDRANT_URL"],
+            timeout=30,
+            check_compatibility=False,
         )
+
+        print("3. QdrantClient created")
 
         self.encoder = GoogleGenerativeAIEmbeddings(
             model=EMBEDDING_MODEL,
             google_api_key=os.getenv("GEMINI_API_KEY")
         )
 
+        print("4. Encoder created")
+
         self._ensure_collection()
+
+        print("5. Collection ensured")
 
     def _ensure_collection(self):
         collections = self.client.get_collections().collections
