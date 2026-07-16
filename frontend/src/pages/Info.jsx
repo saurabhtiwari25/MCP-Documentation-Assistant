@@ -9,16 +9,16 @@ export default function Info() {
     const checkHealth = async () => {
       setLoading(true);
       try {
-        const res = await fetch('http://localhost:8000/health');
+        const res = await fetch('https://mcp-documentation-assistant.onrender.com/health');
         const data = await res.json();
         setHealth({
-          backend: { status: 'online', label: 'FastAPI Backend', url: 'localhost:8000' },
+          backend: { status: 'online', label: 'FastAPI Backend', url: 'lhttps://mcp-documentation-assistant.onrender.com' },
           qdrant: { status: data.qdrant || 'connected', label: 'Qdrant Vector DB', url: 'qdrant:6333' },
           mcp: { status: 'active', label: 'MCP Client Manager', servers: data.mcp_servers || [] },
         });
       } catch {
         setHealth({
-          backend: { status: 'offline', label: 'FastAPI Backend', url: 'localhost:8000' },
+          backend: { status: 'offline', label: 'FastAPI Backend', url: 'https://mcp-documentation-assistant.onrender.com' },
           qdrant: { status: 'offline', label: 'Qdrant Vector DB', url: 'qdrant:6333' },
           mcp: { status: 'offline', label: 'MCP Client Manager', servers: [] },
         });
